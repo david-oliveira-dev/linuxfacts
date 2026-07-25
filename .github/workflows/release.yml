@@ -1,0 +1,100 @@
+name: Release
+
+# On a version tag: build, validate on TestPyPI, then publish to PyPI — all via
+# Trusted Publishing (OIDC), so no API token is ever stored. The TestPyPI and PyPI
+# jobs run in gated environments, so a tag never publishes on its own.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build and check distributions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Run the quality gate
+        run: |
+          uv sync --python 3.12
+          uv run ruff check .
+          uv run ruff format --check .
+          uv run mypy
+          uv run pytest
+
+      - name: Build sdist and wheel
+        run: uv build
+
+      - name: Check distributions
+        run: uvx twine check dist/*
+
+      - name: Upload distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  testpypi:
+    name: publish to TestPyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment: testpypi          # gated in repo settings
+    permissions:
+      id-token: write              # Trusted Publishing (OIDC)
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  verify-testpypi:
+    name: verify install from TestPyPI
+    needs: testpypi
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install from TestPyPI and import
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          # psutil is resolved from real PyPI via the extra index.
+          pip install \
+            --index-url https://test.pypi.org/simple/ \
+            --extra-index-url https://pypi.org/simple/ \
+            "linuxfacts==${version}"
+          python -c "import linuxfacts; print('installed', linuxfacts.__version__)"
+
+  pypi:
+    name: publish to PyPI
+    needs: verify-testpypi
+    runs-on: ubuntu-latest
+    environment: pypi              # gated with a manual approval in repo settings
+    permissions:
+      id-token: write              # Trusted Publishing (OIDC)
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
