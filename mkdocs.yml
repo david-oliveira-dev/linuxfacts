@@ -1,0 +1,49 @@
+site_name: LinuxFacts
+site_description: Typed, testable library for reading Linux system state, with no side effects.
+repo_url: https://github.com/david-oliveira-dev/linuxfacts
+repo_name: david-oliveira-dev/linuxfacts
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Usage: usage.md
+  - Testing your code: testing.md
+  - API reference: api.md
+  - Compatibility: compatibility.md
+  - Design:
+      - Extraction scope: extraction-scope.md
+      - "ADR 1: Fact envelope over exceptions": adr/0001-fact-envelope-over-exceptions.md
+      - "ADR 2: Protocol-based source injection": adr/0002-protocol-based-source-injection.md
+      - "ADR 3: Public testing utilities": adr/0003-public-testing-utilities.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: false
+            show_root_heading: true
+            heading_level: 3
+            docstring_style: google
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences

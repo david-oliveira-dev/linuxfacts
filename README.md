@@ -3,10 +3,6 @@
 Typed, testable library for reading Linux system state — disks, memory, systemd units,
 ports and packages — with no side effects.
 
-> **Status: in development.** The scaffold, tooling and extraction analysis are in place;
-> the `Fact` envelope, models, `FakeSource` and the facts land phase by phase. Sections
-> below are filled in as the corresponding phase completes.
-
 ## Problem
 
 Reading Linux system state in Python is repetitive and brittle. Every project reimplements
@@ -45,9 +41,51 @@ uv run pytest
 
 ## Usage
 
-Filled in with real, runnable examples as the facts land (Phase 4). The headline example —
-the same code tested offline with `FakeSource` and run against the real system — is the
-whole point of the library and lands with the testing guide.
+```python
+import linuxfacts
+
+fact = linuxfacts.disks()
+if fact.is_ok:
+    for disk in fact.unwrap():
+        print(disk.mountpoint, disk.percent_used)
+else:
+    print("could not read disks:", fact.reason)
+```
+
+Every fact returns a `Fact` — either `ok` with a value, or `unknown` with a reason. A
+reading that could not be performed (permission denied, a missing command) is `unknown`,
+never an exception you must catch and never a silent zero.
+
+### The headline: your code, tested offline
+
+Because every fact reads through an injectable `Source`, the tool *you* build tests without
+a real machine. The same call works in production (real system) and in tests (a
+`FakeSource`):
+
+```python
+# your_tool.py
+import linuxfacts
+from linuxfacts.sources.base import Source
+
+def disk_warning(source: Source | None = None) -> str | None:
+    fact = linuxfacts.disks(source)
+    full = [d for d in fact.unwrap_or([]) if d.percent_used > 90]
+    return f"{len(full)} disk(s) over 90%" if full else None
+```
+
+```python
+# test_your_tool.py — offline, deterministic, no real machine
+from linuxfacts.models import DiskUsage
+from linuxfacts.testing import FakeSource
+from your_tool import disk_warning
+
+def test_warns_when_full():
+    source = FakeSource(disks=[DiskUsage("/", 100, 95, 5, 95.0)])
+    assert disk_warning(source) == "1 disk(s) over 90%"
+```
+
+Full documentation, including the testing guide and the compatibility policy, lives in
+[`docs/`](docs/index.md) (built with MkDocs).
 
 ## Testing
 
@@ -64,8 +102,11 @@ is higher.
 
 - [`docs/extraction-scope.md`](docs/extraction-scope.md) — what is extracted from
   `ubuntu-doctor` and what stays, and why
-
-Architecture decision records land in `docs/adr/` as the decisions are made.
+- [`docs/compatibility.md`](docs/compatibility.md) — the SemVer and deprecation promise
+- Architecture decision records in [`docs/adr/`](docs/adr/):
+  [Fact envelope over exceptions](docs/adr/0001-fact-envelope-over-exceptions.md),
+  [protocol-based source injection](docs/adr/0002-protocol-based-source-injection.md),
+  [testing utilities are public API](docs/adr/0003-public-testing-utilities.md)
 
 ## Limitations
 

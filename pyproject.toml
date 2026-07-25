@@ -37,6 +37,10 @@ dev = [
     "nox>=2024.4",
     "types-psutil",
 ]
+docs = [
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.25",
+]
 
 [build-system]
 requires = ["hatchling"]
