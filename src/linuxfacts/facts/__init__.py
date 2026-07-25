@@ -7,6 +7,9 @@ Every fact takes an optional ``source`` (defaulting to the real system) and retu
 
 from __future__ import annotations
 
+from linuxfacts.facts.cpu import cpu
 from linuxfacts.facts.disk import disks
+from linuxfacts.facts.memory import memory
+from linuxfacts.facts.process import processes
 
-__all__ = ["disks"]
+__all__ = ["cpu", "disks", "memory", "processes"]
