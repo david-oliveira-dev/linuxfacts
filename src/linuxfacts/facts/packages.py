@@ -58,7 +58,12 @@ def packages(source: Source | None = None) -> Fact[PackageStatus]:
         >>> from linuxfacts.sources.base import CommandResult
         >>> from linuxfacts.testing import FakeSource
         >>> apt = "Listing...\\nvim/noble-security 2 amd64 [upgradable from: 1]\\n"
-        >>> fake = FakeSource(commands={("apt",): CommandResult(apt, "", 0)})
+        >>> fake = FakeSource(
+        ...     commands={
+        ...         ("apt",): CommandResult(apt, "", 0),
+        ...         ("dpkg",): CommandResult("", "", 0),
+        ...     }
+        ... )
         >>> packages(fake).unwrap().security_updates
         1
     """
