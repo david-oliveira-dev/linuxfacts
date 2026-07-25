@@ -10,4 +10,4 @@ import linuxfacts
 
 
 def test_version_is_exposed() -> None:
-    assert linuxfacts.__version__ == "0.1.0"
+    assert linuxfacts.__version__ == "1.0.0"

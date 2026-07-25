@@ -1,6 +1,6 @@
 [project]
 name = "linuxfacts"
-version = "0.1.0"
+version = "1.0.0"
 description = "Typed, testable library for reading Linux system state — disks, memory, systemd units, ports and packages — with no side effects."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -8,7 +8,7 @@ license = { file = "LICENSE" }
 authors = [{ name = "David Oliveira", email = "davidoliveira.devbr@gmail.com" }]
 keywords = ["python", "linux", "library", "pypi", "systemd", "typing", "testing", "sysadmin"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: POSIX :: Linux",
