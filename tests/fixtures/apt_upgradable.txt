@@ -1,0 +1,10 @@
+Listando...
+libfprint-2-2/noble-updates 1:1.94.7+tod1-0ubuntu5~24.04.8 amd64 [atualizável de: 1:1.94.7+tod1-0ubuntu5~24.04.7]
+libfprint-2-tod1/noble-updates 1:1.94.7+tod1-0ubuntu5~24.04.8 amd64 [atualizável de: 1:1.94.7+tod1-0ubuntu5~24.04.7]
+libhtml-parser-perl/noble-updates,noble-security 3.81-1ubuntu0.1 amd64 [atualizável de: 3.81-1build3]
+remmina-common/noble-updates,noble-updates,noble-security,noble-security 1.4.43+dfsg-0ubuntu0.24.04.2 all [atualizável de: 1.4.43+dfsg-0ubuntu0.24.04.1]
+remmina-plugin-rdp/noble-updates,noble-security 1.4.43+dfsg-0ubuntu0.24.04.2 amd64 [atualizável de: 1.4.43+dfsg-0ubuntu0.24.04.1]
+remmina-plugin-secret/noble-updates,noble-security 1.4.43+dfsg-0ubuntu0.24.04.2 amd64 [atualizável de: 1.4.43+dfsg-0ubuntu0.24.04.1]
+remmina-plugin-vnc/noble-updates,noble-security 1.4.43+dfsg-0ubuntu0.24.04.2 amd64 [atualizável de: 1.4.43+dfsg-0ubuntu0.24.04.1]
+remmina/noble-updates,noble-security 1.4.43+dfsg-0ubuntu0.24.04.2 amd64 [atualizável de: 1.4.43+dfsg-0ubuntu0.24.04.1]
+tar/noble-updates,noble-security 1.35+dfsg-3ubuntu0.4 amd64 [atualizável de: 1.35+dfsg-3ubuntu0.3]

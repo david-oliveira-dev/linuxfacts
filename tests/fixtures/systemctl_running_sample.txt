@@ -1,0 +1,3 @@
+accounts-daemon.service     loaded active running Accounts Service
+avahi-daemon.service        loaded active running Avahi mDNS/DNS-SD Stack
+bluetooth.service           loaded active running Bluetooth service

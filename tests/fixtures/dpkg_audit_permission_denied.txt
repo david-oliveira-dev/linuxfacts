@@ -1,0 +1,1 @@
+dpkg: erro: não foi possível verificar o ficheiro de lock para o directório /var/lib/dpkg da base de dados do dpkg: Permissão negada
