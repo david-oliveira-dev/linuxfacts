@@ -67,6 +67,7 @@ a real machine. The same call works in production (real system) and in tests (a
 import linuxfacts
 from linuxfacts.sources.base import Source
 
+
 def disk_warning(source: Source | None = None) -> str | None:
     fact = linuxfacts.disks(source)
     full = [d for d in fact.unwrap_or([]) if d.percent_used > 90]
@@ -78,6 +79,7 @@ def disk_warning(source: Source | None = None) -> str | None:
 from linuxfacts.models import DiskUsage
 from linuxfacts.testing import FakeSource
 from your_tool import disk_warning
+
 
 def test_warns_when_full():
     source = FakeSource(disks=[DiskUsage("/", 100, 95, 5, 95.0)])

@@ -7,14 +7,14 @@ Each fact is a function that takes an optional `source` and returns a `Fact`.
 ```python
 import linuxfacts
 
-linuxfacts.disks()             # Fact[list[DiskUsage]]
-linuxfacts.memory()            # Fact[MemoryInfo]
-linuxfacts.cpu()               # Fact[CpuInfo]
-linuxfacts.processes(top=10)   # Fact[list[ProcessInfo]] — heaviest first
-linuxfacts.systemd_units(state="failed")   # Fact[list[SystemdUnit]]
-linuxfacts.listening_ports()   # Fact[list[ListeningPort]]
-linuxfacts.packages()          # Fact[PackageStatus]
-linuxfacts.host()              # Fact[HostInfo]
+linuxfacts.disks()  # Fact[list[DiskUsage]]
+linuxfacts.memory()  # Fact[MemoryInfo]
+linuxfacts.cpu()  # Fact[CpuInfo]
+linuxfacts.processes(top=10)  # Fact[list[ProcessInfo]] — heaviest first
+linuxfacts.systemd_units(state="failed")  # Fact[list[SystemdUnit]]
+linuxfacts.listening_ports()  # Fact[list[ListeningPort]]
+linuxfacts.packages()  # Fact[PackageStatus]
+linuxfacts.host()  # Fact[HostInfo]
 ```
 
 ## The Fact envelope
@@ -33,9 +33,9 @@ else:
 Three ways to get the value out, from strictest to most forgiving:
 
 ```python
-fact.unwrap()          # returns the value, or raises UnknownFactError if unknown
-fact.unwrap_or(0.0)    # returns the value, or a default if unknown
-fact.value             # the value, or None if unknown (you check yourself)
+fact.unwrap()  # returns the value, or raises UnknownFactError if unknown
+fact.unwrap_or(0.0)  # returns the value, or a default if unknown
+fact.value  # the value, or None if unknown (you check yourself)
 ```
 
 `unwrap()` is deliberate: use it where an unknown reading is unacceptable and should fail
@@ -57,7 +57,7 @@ Only programmer errors raise. For example, a negative `top` is a bug, not a syst
 condition:
 
 ```python
-linuxfacts.processes(top=-1)   # raises ValueError
+linuxfacts.processes(top=-1)  # raises ValueError
 ```
 
 ## Notes on specific facts

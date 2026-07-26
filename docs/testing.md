@@ -15,6 +15,7 @@ real system; in tests you pass a `FakeSource` with canned readings.
 import linuxfacts
 from linuxfacts.sources.base import Source
 
+
 def disk_warning(source: Source | None = None) -> str | None:
     fact = linuxfacts.disks(source)
     if fact.is_unknown:
@@ -31,9 +32,11 @@ from linuxfacts.models import DiskUsage
 from linuxfacts.testing import FakeSource
 from your_tool import disk_warning
 
+
 def test_warns_when_a_disk_is_full():
     source = FakeSource(disks=[DiskUsage("/", 100, 95, 5, 95.0)])
     assert disk_warning(source) == "1 disk(s) over 90%"
+
 
 def test_quiet_when_disks_are_healthy():
     source = FakeSource(disks=[DiskUsage("/", 100, 10, 90, 10.0)])
@@ -51,6 +54,7 @@ required:
 ```python
 from linuxfacts.exceptions import CommandNotFoundError
 from linuxfacts.testing import FakeSource
+
 
 def test_handles_missing_apt():
     source = FakeSource(commands={("apt",): CommandNotFoundError("no apt")})
