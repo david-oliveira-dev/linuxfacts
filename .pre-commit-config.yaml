@@ -12,15 +12,18 @@ repos:
       - id: check-merge-conflict
       - id: detect-private-key
 
+  # Keep this rev in sync with the ruff version in uv.lock. A gap between the two
+  # lets the hook pass locally while the CI gate fails on the same files.
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9
+    rev: v0.16.0
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--fix]
       - id: ruff-format
 
+  # Keep this rev in sync with the mypy version in uv.lock, for the same reason.
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.2
+    rev: v2.3.0
     hooks:
       - id: mypy
         additional_dependencies:
